@@ -1,11 +1,11 @@
 #MAIN Branch
 # import requests
 # import json
-import re
+# import re
 
 
-Name_Pattern =re.compile(r'\"firstName\"\:\s\"[A-Z,a-z]+\"')
-name_P2 = re.compile(r'[A-Z,a-z]+')
+# Name_Pattern =re.compile(r'\"firstName\"\:\s\"[A-Z,a-z]+\"')
+# name_P2 = re.compile(r'[A-Z,a-z]+')
 # Found_Name_Pattern=Name_Pattern.finditer()
 
 
@@ -18,7 +18,7 @@ name_P2 = re.compile(r'[A-Z,a-z]+')
 # # Chosen_Data: dict = json.loads(Dummy_Data)
 
 
-
+#Skippa denna del
 
 
 
@@ -90,7 +90,7 @@ PythonData = json.loads(InternData)
 Eleverlista = []
 
 for delar in PythonData["users"]:
-    HittaElever = elever(
+    HittaElever: elever = elever(
         name=delar["firstName"], 
         lastname=delar["lastName"], 
         email=delar["email"],
