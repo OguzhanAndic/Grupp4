@@ -154,8 +154,8 @@ for delar in PythonData["users"]:
 while True:
     lognamn=input('Namn: ').lower()
     logkod=input('Lösenord: ')
-    if lognamn == 'john' and logkod=='Examen2026':
-        print('Välkomen lärare John')
+    if lognamn == 'edvin' and logkod=='123':
+        print('Välkommen lärare Edvin')
         break
     else:
         print('Inloggning misslyckad, försök igen')
@@ -163,25 +163,37 @@ while True:
 
 
 
-
-
-Lärar_Val=input('vad vill du göra?, Hämta lista=1')
 while True:
-    if Lärar_Val=='1':
-        for elev in EleverlistaUP:
-            print(f'elevnamn: {elev.name} {elev.lastname} , Mail: {elev.email} , Telefon: {elev.phone} ')
-    if Lärar_Val=='2':
-        search_HittaElever = input('Vem vill du söka efter ?\n')
-        for HittaElever in EleverlistaUP:
-            if HittaElever.name.lower() == search_HittaElever.lower():
-                print(HittaElever.name, HittaElever.lastname)
-                print(HittaElever.email)
-                print(f'Telefon: {HittaElever.phone}')
-                break
-            else: 
-                print('Personen finns inte')
-                break
+    print("""          Lista = 1
+          Sök elev = 2 
+          Logga ut = 3""")
+    Lärar_Val=input('Vad vill du göra? : ')
+    while True:
+        if Lärar_Val=='1':
+            for elev in EleverlistaUP:
+                print(f'Elevnamn: {elev.name} {elev.lastname} , Mail: {elev.email} , Telefon: {elev.phone} ')
+            break
+        if Lärar_Val=='2':
+            search_HittaElever = input('Vem vill du söka efter ?\n')
+            for HittaElever in EleverlistaUP:
+                if HittaElever.name.lower() == search_HittaElever.lower():
+                    print(HittaElever.name, HittaElever.lastname)
+                    print(HittaElever.email)
+                    print(f'Telefon: {HittaElever.phone}')
+                    break
+                else: 
+                    print('Personen finns inte')
+                    break
+            break
+        if Lärar_Val=='3':
+            break
+    Stäng=input('vill du stänga programmet: ').lower()
+    if Stäng== 'ja':
         break
+    elif Stäng== 'nej':
+        continue
+    else:
+        print('Felaktig inmatning, återvänder till menyn')
 
 #gör en while true loop
 #Full lista med all info = 1
