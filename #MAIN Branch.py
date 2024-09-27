@@ -88,6 +88,7 @@ InternData = ExternData.text
 PythonData = json.loads(InternData)
 
 Eleverlista = []
+EleverlistaUP = []
 
 for delar in PythonData["users"]:
     HittaElever: elever = elever(
@@ -96,7 +97,7 @@ for delar in PythonData["users"]:
         email=delar["email"],
         phone=delar["phone"]
     )
-    Eleverlista.append(HittaElever)
+    EleverlistaUP.append(HittaElever)
 
 
 
@@ -122,7 +123,7 @@ while True:
     else:
         print('Inloggning misslyckad')
 
-for elev in Eleverlista:
+for elev in EleverlistaUP:
     print(f'elevnamn: {elev.name} {elev.lastname} , Mail: {elev.email} , Telefon: {elev.phone} ')
 
 
