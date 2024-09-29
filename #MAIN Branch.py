@@ -56,9 +56,7 @@ def inlogg()->str:
 
 
 def Menynbeskrivning()-> str:
-    print("""          Lista = 1
-          Sök elev = 2 
-          Logga ut = 3""")
+    print('\n Klass lista: 1 \n Sök elev: 2 \n Logga ut: 3 \n')
 
 
 
@@ -70,17 +68,32 @@ def HämtaUtListan()-> str:
     
 
 def HämtaUtElev()-> str:
-    search_HittaElever = input('Vem vill du söka efter ?\n')
+    search_HittaElever = input('Vem vill du söka efter :')
     for HittaElever in EleverlistaUP:
         if HittaElever.name.lower() == search_HittaElever.lower():
             print(f'Fullständingt namn: {HittaElever.name} {HittaElever.lastname}')
             print(f'Mail: {HittaElever.email}')
             print(f'Telefon: {HittaElever.phone}')
-            print('Återvänder till menyn')
             break
         else: 
-            print('Personen finns inte, Går tillbaka till huvudmenyn')
+            print('Personen du sökt finns inte på klass listan')
             break
+
+def KräverLoopPåHämtaUtElev()->None:
+    HämtaUtElev()
+    while True:
+        ForsättMedMinJävlaLoop=input('Vill du kolla upp en annan elev? svara ja eller nej : ').lower()
+        if ForsättMedMinJävlaLoop=='ja':
+            HämtaUtElev()
+            continue
+        if ForsättMedMinJävlaLoop=='nej':
+            break
+        else:
+            print('Felaktig inmatning, Frågar igen! ')
+            continue
+    
+
+            
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------
@@ -99,7 +112,7 @@ while True:
             break
         if Lärar_Val =='2':
             while True:
-                HämtaUtElev()
+                KräverLoopPåHämtaUtElev()
                 break
             break
         if Lärar_Val=='3':
