@@ -1,3 +1,158 @@
+
+#grunden
+
+import requests
+import json
+import sys
+ 
+class elever:
+    def __init__(self, name: str, lastname: str, email:str, phone:str ): #varför behövs allt annat en self?
+        self.name = name
+        self.lastname = lastname
+        self.email = email
+        self.phone = phone
+    def prLista():
+        for elev in EleverlistaUP:
+            print(f'Elevnamn: {elev.name}')
+
+        
+ExternData = requests.get("https://dummyjson.com/users")
+
+InternData = ExternData.text
+
+PythonData = json.loads(InternData)
+
+EleverlistaUP = []
+
+for delar in PythonData["users"]:
+    HittaElever: elever = elever(
+        name=delar["firstName"], 
+        lastname=delar["lastName"], 
+        email=delar["email"],
+        phone=delar["phone"]
+    )
+    EleverlistaUP.append(HittaElever)
+
+
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------
+# Här är alla defs som kommer bygga up programmet
+
+
+
+
+
+def inlogg()->str:
+    while True:
+        lognamn=input('Namn: ').lower()
+        logkod=input('Lösenord: ')
+        if lognamn == 'edvin' and logkod=='123':
+            print('Välkommen lärare Edvin')
+            break
+        else:
+            print('Inloggning misslyckad, försök igen')
+
+
+
+def Menynbeskrivning()-> str:
+    print("""          Lista = 1
+          Sök elev = 2 
+          Logga ut = 3""")
+
+
+
+
+def HämtaUtListan()-> str:
+    for elev in EleverlistaUP:
+        print(f'Elevnamn: {elev.name} {elev.lastname} , Mail: {elev.email} , Telefon: {elev.phone} ')
+        print('Återvänder till menyn')
+    
+
+def HämtaUtElev()-> str:
+    search_HittaElever = input('Vem vill du söka efter ?\n')
+    for HittaElever in EleverlistaUP:
+        if HittaElever.name.lower() == search_HittaElever.lower():
+            print(f'Fullständingt namn: {HittaElever.name} {HittaElever.lastname}')
+            print(f'Mail: {HittaElever.email}')
+            print(f'Telefon: {HittaElever.phone}')
+            print('Återvänder till menyn')
+            break
+        else: 
+            print('Personen finns inte, Går tillbaka till huvudmenyn')
+            break
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------
+#Här är programmet byggt med hjälp av alla defs och bästmeda variabler
+
+
+inlogg()
+while True:
+    Menynbeskrivning()
+    Lärar_Val: str=input('Vad vill du göra? : ')
+    while True:
+        if Lärar_Val == '1':
+            while True:
+                HämtaUtListan()
+                break
+            break
+        if Lärar_Val =='2':
+            while True:
+                HämtaUtElev()
+                break
+            break
+        if Lärar_Val=='3':
+            print('loggar ut')
+            sys.exit()
+        else: 
+            print('Felaktig inmatning, återvänder till menyn')
+            break
+
+    
+#----------------------------------------------------------------------------------------------------------------------------------------------
+
+                
+
+# while True:
+#     print("""          Lista = 1
+#           Sök elev = 2 
+#           Logga ut = 3""")
+#     Lärar_Val=input('Vad vill du göra? : ')
+#     while True:
+#         if Lärar_Val=='1':
+#             for elev in EleverlistaUP:
+#                 print(f'Elevnamn: {elev.name} {elev.lastname} , Mail: {elev.email} , Telefon: {elev.phone} ')
+#             break
+#         if Lärar_Val=='2':
+#             search_HittaElever = input('Vem vill du söka efter ?\n')
+#             for HittaElever in EleverlistaUP:
+#                 if HittaElever.name.lower() == search_HittaElever.lower():
+#                     print(HittaElever.name, HittaElever.lastname)
+#                     print(HittaElever.email)
+#                     print(f'Telefon: {HittaElever.phone}')
+#                     break
+#                 else: 
+#                     print('Personen finns inte')
+#                     break
+#             break
+#         if Lärar_Val=='3':
+#             break
+#     Stäng=input('vill du stänga programmet: ').lower()
+#     if Stäng== 'ja':
+#         break
+#     elif Stäng== 'nej':
+#         continue
+#     else:
+#         print('Felaktig inmatning, återvänder till menyn')
+
+        
+
+#gör en while true loop
+#Full lista med all info = 1
+#Välj elev->välj info från lista
+
+
 #MAIN Branch
 # import requests
 # import json
@@ -21,10 +176,6 @@
 #Skippa denna del
 
 
-
-
-
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Shilans kod
 
 # import requests
@@ -63,7 +214,7 @@
 
 
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 #byggd med hjälp av shilans kod, har försökt att förtydliga vissa saker men varierande variabelnamn, byggt upp en inloggning, skapat en lista med namn mail och telefonnummer
 # import requests
@@ -111,90 +262,7 @@
 #     Elever.append(EnElev)
 
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#Inloggning för lärare
 
 #Ny kommentar
 
-
-import requests
-import json
-
- 
-class elever:
-    def __init__(self, name: str, lastname: str, email:str, phone:str ): #varför behövs allt annat en self?
-        self.name = name
-        self.lastname = lastname
-        self.email = email
-        self.phone = phone
-    def prLista():
-        for elev in EleverlistaUP:
-            print(f'Elevnamn: {elev.name}')
-
-        
-ExternData = requests.get("https://dummyjson.com/users")
-
-InternData = ExternData.text
-
-PythonData = json.loads(InternData)
-
-EleverlistaUP = []
-
-for delar in PythonData["users"]:
-    HittaElever: elever = elever(
-        name=delar["firstName"], 
-        lastname=delar["lastName"], 
-        email=delar["email"],
-        phone=delar["phone"]
-    )
-    EleverlistaUP.append(HittaElever)
-
-
-while True:
-    lognamn=input('Namn: ').lower()
-    logkod=input('Lösenord: ')
-    if lognamn == 'edvin' and logkod=='123':
-        print('Välkommen lärare Edvin')
-        break
-    else:
-        print('Inloggning misslyckad, försök igen')
-
-
-
-
-while True:
-    print("""          Lista = 1
-          Sök elev = 2 
-          Logga ut = 3""")
-    Lärar_Val=input('Vad vill du göra? : ')
-    while True:
-        if Lärar_Val=='1':
-            for elev in EleverlistaUP:
-                print(f'Elevnamn: {elev.name} {elev.lastname} , Mail: {elev.email} , Telefon: {elev.phone} ')
-            break
-        if Lärar_Val=='2':
-            search_HittaElever = input('Vem vill du söka efter ?\n')
-            for HittaElever in EleverlistaUP:
-                if HittaElever.name.lower() == search_HittaElever.lower():
-                    print(HittaElever.name, HittaElever.lastname)
-                    print(HittaElever.email)
-                    print(f'Telefon: {HittaElever.phone}')
-                    break
-                else: 
-                    print('Personen finns inte')
-                    break
-            break
-        if Lärar_Val=='3':
-            break
-    Stäng=input('vill du stänga programmet: ').lower()
-    if Stäng== 'ja':
-        break
-    elif Stäng== 'nej':
-        continue
-    else:
-        print('Felaktig inmatning, återvänder till menyn')
-
-#gör en while true loop
-#Full lista med all info = 1
-#Välj elev->välj info från lista
