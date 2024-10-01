@@ -5,6 +5,16 @@ import requests
 import json
 import sys
  
+ExternData = requests.get("https://dummyjson.com/users")
+
+InternData = ExternData.text
+
+PythonData = json.loads(InternData)
+
+EleverLista = []
+EleverlistaUP = []
+
+
 class elever:
     def __init__(self, name: str, lastname: str, email:str, phone:str ): 
         self.name = name
@@ -15,13 +25,50 @@ class elever:
         for elev in EleverlistaUP:
             print(f'Elevnamn: {elev.name}')
 
-class Lärare:
+for delar in PythonData["users"]:
+    HittaElever: elever = elever(
+        name=delar["firstName"], 
+        lastname=delar["lastName"], 
+        email=delar["email"],
+        phone=delar["phone"]
+    )
+    EleverlistaUP.append(HittaElever)
+
+class Begränsad_elever:
+    def __init__(self, Begränsadname: str, Begränsadlastname: str ): 
+        self.Begränsadname = Begränsadname
+        self.Begränsadlastname = Begränsadlastname
+    def prLista():
+        for elev in EleverLista:
+            print(f'Elevnamn: {elev.name}')
+
+for delar in PythonData["users"]:
+    HittaBegränsadElever: Begränsad_elever = Begränsad_elever(
+        Begränsadname=delar["firstName"], 
+        Begränsadlastname=delar["lastName"]
+
+    )
+    EleverLista.append(HittaBegränsadElever)
+
+
+class Användare_Lärare:
     def __init__(self, Lärarnamn: str='edvin' , Lösenord: str='123' )->None:
         self.Lärarnamn = Lärarnamn
         self.Lösenord = Lösenord
+    def inlogg(self)->str:
+        while True:
+            AngeAnvändarnamn=input('Namn: ').lower()
+            AngeLösenord=input('Lösenord: ')
+            if AngeAnvändarnamn == self.Lärarnamn and AngeLösenord == self.Lösenord :
+                print('Välkommen lärare Edvin')
+                break
+            else:
+                print('Inloggning misslyckad, försök igen')
 
-
-
+class Användare_Elev:
+    def __init__(self, Elevnamn: str='furkan' , ElevLösenord: str='123' )->None:
+        self.Lärarnamn = Elevnamn
+        self.Lösenord = ElevLösenord
     def inlogg(self)->str:
         while True:
             AngeAnvändarnamn=input('Namn: ').lower()
@@ -33,30 +80,8 @@ class Lärare:
                 print('Inloggning misslyckad, försök igen')
 
 
-        
-ExternData = requests.get("https://dummyjson.com/users")
-
-InternData = ExternData.text
-
-PythonData = json.loads(InternData)
-
-EleverlistaUP = []
-
-for delar in PythonData["users"]:
-    HittaElever: elever = elever(
-        name=delar["firstName"], 
-        lastname=delar["lastName"], 
-        email=delar["email"],
-        phone=delar["phone"]
-    )
-    EleverlistaUP.append(HittaElever)
-
-
-
-
 #----------------------------------------------------------------------------------------------------------------------------------------------
 # Här är alla defs som kommer bygga up programmet
-
 
 
 
@@ -64,15 +89,14 @@ def Menynbeskrivning()-> str:
     print('\n Klass lista: 1 \n Sök elev: 2 \n Logga ut: 3 \n')
 
 
-
-
-def HämtaUtListan()-> str:
+def HämtaUtListanFörLärare()-> str:
     for elev in EleverlistaUP:
-        print(f'Elevnamn: {elev.name} {elev.lastname} , Mail: {elev.email} , Telefon: {elev.phone} ')
-        print('Återvänder till menyn')
+        print(f'Elevnamn: {elev.name}, {elev.lastname} , Mail: {elev.email} , Telefon: {elev.phone} ')
+        
+
     
 
-def HämtaUtElev()-> str:
+def HämtaUtElevFörLärare()-> str:
     search_HittaElever = input('Vem vill du söka efter :')
     for HittaElever in EleverlistaUP:
         if HittaElever.name.lower() == search_HittaElever.lower():
@@ -84,13 +108,12 @@ def HämtaUtElev()-> str:
         print('ingen elev hittad')
         
             
-
-def KräverLoopPåHämtaUtElev()->None:
-    HämtaUtElev()
+def KräverLoopPåHämtaUtElevFörLärare()->None:
+    HämtaUtElevFörLärare()
     while True:
         ForsättMedMinJävlaLoop=input('Vill du kolla upp en annan elev? svara ja eller nej : ').lower()
         if ForsättMedMinJävlaLoop=='ja':
-            HämtaUtElev()
+            HämtaUtElevFörLärare()
             continue
         if ForsättMedMinJävlaLoop=='nej':
             break
@@ -98,37 +121,143 @@ def KräverLoopPåHämtaUtElev()->None:
             print('Felaktig inmatning, Frågar igen! ')
             continue
     
-
             
+def HämtaUtListanFörElev()-> str:
+    for elev in EleverlistaUP:
+        print(f'Elevnamn: {elev.name}, {elev.lastname}')
+        # print('Återvänder till menyn')
 
+
+def HämtaUtElevFörElev()-> str:
+    search_HittaElever = input('Vem vill du söka efter :')
+    for HittaElever in EleverlistaUP:
+        if HittaElever.name.lower() == search_HittaElever.lower():
+            print(f'Fullständingt namn: {HittaElever.name} {HittaElever.lastname}')
+            break
+    else:
+        print('ingen elev hittad')
+
+def KräverLoopPåHämtaUtElevFörElev()->None:
+    HämtaUtElevFörElev()
+    while True:
+        ForsättMedMinJävlaLoop=input('Vill du kolla upp en annan elev? svara ja eller nej : ').lower()
+        if ForsättMedMinJävlaLoop=='ja':
+            HämtaUtElevFörElev()
+            continue
+        if ForsättMedMinJävlaLoop=='nej':
+            break
+        else:
+            print('Felaktig inmatning, Frågar igen! ')
+            continue
 
 #----------------------------------------------------------------------------------------------------------------------------------------------
 #Här är programmet byggt med hjälp av alla defs och bästmeda variabler
+# def HelaProgrammet():
+#     while True: 
+#         LärareEllerElev: str= input('Välj: Lärare = 1 eller Elev = 2 \n: ')
+#         if LärareEllerElev== '1':
+#             Edvin_Lärare: Användare_Lärare= Användare_Lärare()
+#             Edvin_Lärare.inlogg()
+#             while True:
+#                 Menynbeskrivning()
+#                 Lärar_Val: str=input('Vad vill du göra? : ')
+#                 while True:
+#                     if Lärar_Val == '1':
+#                         HämtaUtListanFörLärare()
+#                         break
+#                     if Lärar_Val =='2':
+#                         while True:
+#                             KräverLoopPåHämtaUtElevFörlärare()
+#                             break
+#                         break
+#                     if Lärar_Val=='3':
+#                         print('loggar ut')
+#                         sys.exit()
+#                     else: 
+#                         print('Felaktig inmatning, återvänder till menyn')
+#                         break
+#         if LärareEllerElev == '2':
+#             Furkan_elev: Användare_Elev= Användare_Elev()
+#             Furkan_elev.inlogg()
+#             while True:
+#                 Menynbeskrivning()
+#                 Lärar_Val: str=input('Vad vill du göra? : ')
+#                 while True:
+#                     if Lärar_Val == '1':
+#                         while True:
+#                             HämtaUtListanFörElev()
+#                             print('Återvänder till menyn')
+#                             break
+#                         break
+#                     if Lärar_Val =='2':
+#                         while True:
+#                             KräverLoopPåHämtaUtElevFörElev()
+#                             break
+#                         break
+#                     if Lärar_Val=='3':
+#                         print('loggar ut')
+#                         sys.exit()
+#                     else: 
+#                         print('Felaktig inmatning, återvänder till menyn')
+#                         break
+#         else:
+#             print('inte ett giltigt svar, ställer om frågan')
+#             continue
 
-Edvin_Lärare: Lärare= Lärare()
-Edvin_Lärare.inlogg()
-while True:
-    Menynbeskrivning()
-    Lärar_Val: str=input('Vad vill du göra? : ')
-    while True:
-        if Lärar_Val == '1':
-            while True:
-                HämtaUtListan()
-                break
-            break
-        if Lärar_Val =='2':
-            while True:
-                KräverLoopPåHämtaUtElev()
-                break
-            break
-        if Lärar_Val=='3':
-            print('loggar ut')
-            sys.exit()
-        else: 
-            print('Felaktig inmatning, återvänder till menyn')
-            break
 
-    
+
+def HelaProgrammet():
+    while True: 
+        LärareEllerElev: str= input('Välj: Lärare = 1 eller Elev = 2 \n: ')
+        if LärareEllerElev== '1':
+            Edvin_Lärare: Användare_Lärare= Användare_Lärare()
+            Edvin_Lärare.inlogg()
+            while True:
+                Menynbeskrivning()
+                Lärar_Val: str=input('Vad vill du göra? : ')
+                while True:
+                    if Lärar_Val == '1':
+                        HämtaUtListanFörLärare()
+                        print('Återvänder till menyn')
+                        break
+                    if Lärar_Val =='2':
+                        while True:
+                            KräverLoopPåHämtaUtElevFörLärare()
+                            break
+                        break
+                    if Lärar_Val=='3':
+                        print('loggar ut')
+                        sys.exit()
+                    else: 
+                        print('Felaktig inmatning, återvänder till menyn')
+                        break
+        if LärareEllerElev== '2':    
+            Furkan_elev: Användare_Elev= Användare_Elev()
+            Furkan_elev.inlogg()
+            while True:
+                Menynbeskrivning()
+                Lärar_Val: str=input('Vad vill du göra? : ')
+                while True:
+                    if Lärar_Val == '1':
+                        HämtaUtListanFörElev()
+                        print('Återvänder till menyn')
+                        break
+                    if Lärar_Val =='2':
+                        while True:
+                            KräverLoopPåHämtaUtElevFörElev()
+                            break
+                        break
+                    if Lärar_Val=='3':
+                        print('loggar ut')
+                        sys.exit()
+                    else: 
+                        print('Felaktig inmatning, återvänder till menyn')
+                        break
+        else:
+            print('Felaktig inmatning, Ställer om frågan!')
+            continue
+
+HelaProgrammet()
 #----------------------------------------------------------------------------------------------------------------------------------------------
 
                 
