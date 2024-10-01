@@ -6,7 +6,7 @@ import json
 import sys
  
 class elever:
-    def __init__(self, name: str, lastname: str, email:str, phone:str ): #varför behövs allt annat en self?
+    def __init__(self, name: str, lastname: str, email:str, phone:str ): 
         self.name = name
         self.lastname = lastname
         self.email = email
@@ -14,6 +14,24 @@ class elever:
     def prLista():
         for elev in EleverlistaUP:
             print(f'Elevnamn: {elev.name}')
+
+class Lärare:
+    def __init__(self, Lärarnamn: str='edvin' , Lösenord: str='123' )->None:
+        self.Lärarnamn = Lärarnamn
+        self.Lösenord = Lösenord
+
+
+
+    def inlogg(self)->str:
+        while True:
+            AngeAnvändarnamn=input('Namn: ').lower()
+            AngeLösenord=input('Lösenord: ')
+            if AngeAnvändarnamn == self.Lärarnamn and AngeLösenord == self.Lösenord :
+                print('Välkommen lärare Edvin')
+                break
+            else:
+                print('Inloggning misslyckad, försök igen')
+
 
         
 ExternData = requests.get("https://dummyjson.com/users")
@@ -42,19 +60,6 @@ for delar in PythonData["users"]:
 
 
 
-
-def inlogg()->str:
-    while True:
-        lognamn=input('Namn: ').lower()
-        logkod=input('Lösenord: ')
-        if lognamn == 'edvin' and logkod=='123':
-            print('Välkommen lärare Edvin')
-            break
-        else:
-            print('Inloggning misslyckad, försök igen')
-
-
-
 def Menynbeskrivning()-> str:
     print('\n Klass lista: 1 \n Sök elev: 2 \n Logga ut: 3 \n')
 
@@ -75,9 +80,10 @@ def HämtaUtElev()-> str:
             print(f'Mail: {HittaElever.email}')
             print(f'Telefon: {HittaElever.phone}')
             break
-        else: 
-            print('Personen du sökt finns inte på klass listan')
-            break
+    else:
+        print('ingen elev hittad')
+        
+            
 
 def KräverLoopPåHämtaUtElev()->None:
     HämtaUtElev()
@@ -99,8 +105,8 @@ def KräverLoopPåHämtaUtElev()->None:
 #----------------------------------------------------------------------------------------------------------------------------------------------
 #Här är programmet byggt med hjälp av alla defs och bästmeda variabler
 
-
-inlogg()
+Edvin_Lärare: Lärare= Lärare()
+Edvin_Lärare.inlogg()
 while True:
     Menynbeskrivning()
     Lärar_Val: str=input('Vad vill du göra? : ')
