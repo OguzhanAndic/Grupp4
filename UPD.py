@@ -7,34 +7,34 @@ import json     #Den hanterar json formatet
 extern_data = requests.get("https://dummyjson.com/users")
 
 #Omvandlar extern_data till text format
-data = extern_data.text  
+data: str = extern_data.text  
 
 #Omvandla API-svaret till Python-objekt
-json_data = json.loads(data)
+json_data: dict = json.loads(data)
 
 
-#Tom lista för elever
-elever = []
+#Tom lista för elever, för att lagra elevobejekt 
+elever: list = []
 
 #Skapat en class och definierat en metod med attribut
-class Elev:
-    def __init__ (self, name: str, lastname: str, email: str, phone: str, address: str):
+class Elev :
+    def __init__ (self, name: str, lastname: str, email: str, phone: str, address: dict)->None:
         self.name = name
         self.lastname = lastname
         self.email = email
         self.phone = phone
         self.address = address
-#För att struktera adressinformationen
-    def adress_info(self):
-        adress = self.address
+#En metod för att struktera adressinformationen
+    def adress_info(self)->None:
+        adress: dict = self.address
         print(f"Adress: {adress['address']}, {adress['city']}, {adress['state']} {adress['postalCode']}, {adress['country']}")
 
 
 # Loopa genom alla användare (user) i "users"-listan från JSON-data och
-# skapa ett Elev-objekt av varje användare, som läggs till i listan elever.
+# Skapa ett Elev-objekt av varje användare, som läggs till i listan elever.
 
 for user in json_data["users"]:
-    elev = Elev(
+    elev: Elev = Elev(
         name = user["firstName"],
         lastname = user["lastName"],
         email = user["email"],
@@ -45,8 +45,7 @@ for user in json_data["users"]:
 
 
 #Inloggningsfunktion
-#
-def inloggning(användarnamn: str = "Devops24", lösenord: str = "Grupp4"): 
+def inloggning(användarnamn: str = "Devops24", lösenord: str = "Grupp4")->None: 
     while True: #Om användaren skriver fel inloggnings uppgifter kommer while true loopa tillbaka till början. 
         angivet_namn: str = input("Användarnamn: ")
         angivet_lösenord: str = input("Lösenord: ")
@@ -59,7 +58,7 @@ def inloggning(användarnamn: str = "Devops24", lösenord: str = "Grupp4"):
 
 #Sökfunktion:
 #Skapat en funktion som frågar användaren efter input för att sedan plocka fram information om sådan finns i elever listan
-def söka_elev(): 
+def söka_elev()->None: 
     elev_sökning: str = input("Ange elevens förnamn: ").lower()  
     for sökning in elever:
         if sökning.name.lower() == elev_sökning:  #Om namnet på listan stämmer överens med namnet på input
@@ -72,7 +71,7 @@ def söka_elev():
         print("Ingen elev med det angivna namnet kunde hittas.")
 
 #Funktion som använder sig av while loop när användaren söker efter elev
-def loopa_sök_elev():
+def loopa_sök_elev()->None:
     söka_elev()
     while True:
         loopa_igen: str = input('Vill du söka upp en annan elev? Svara ja eller nej : ').lower()
@@ -86,7 +85,7 @@ def loopa_sök_elev():
             continue
 
 #Funktion för huvudmenyn som använder while loop för 2 alternativ som refererar till tidigare funktioner 
-def huvudmeny():  
+def huvudmeny()->None:  
 
     while True:
         print(r'''
