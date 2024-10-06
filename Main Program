@@ -173,4 +173,4 @@ if elever_info():  #Kontrollera om elever_info() returnerade True (lyckad körni
     huvudmeny()  #Kör huvudmeny om elever_info() lyckades
 else:
     print(
-        "Datahanteringen misslyckades. Inloggning och huvudmeny kommer inte att köras."
+        "Datahanteringen misslyckades. Inloggning och huvudmeny kommer inte att köras.")
